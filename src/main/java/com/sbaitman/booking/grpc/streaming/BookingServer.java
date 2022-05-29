@@ -42,9 +42,9 @@ public class BookingServer {
         logger.info("Starting booking server at port 8980");
         BookingServer bookingServer = new BookingServer(8980);
         bookingServer.start();
+        logger.info( "Booking server started");
         if (bookingServer.server != null) {
             bookingServer.server.awaitTermination();
         }
-        logger.info( "Starting booking started");
     }
 }

@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 public class BookingService extends MovieBookingServiceGrpc.MovieBookingServiceImplBase {
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm a");
@@ -82,16 +83,79 @@ public class BookingService extends MovieBookingServiceGrpc.MovieBookingServiceI
 
     @Override
     public void getAllBookingsByLocation(BookingQuery request, StreamObserver<BookingDetails> responseObserver) {
-        super.getAllBookingsByLocation(request, responseObserver);
+        if(request != null && request.getLocation() != null) {
+            logger.info("Fetching bookings for location: " + request.getLocation());
+            if(bookings != null && bookings.size() > 0) {
+                bookings.stream().map(booking -> (MovieBooking) booking).
+                        forEach(booking -> {
+                            if(request.getLocation().equalsIgnoreCase(booking.getLocation())) {
+                                BookingDetails bookingDetails = BookingDetails.newBuilder().setId(booking.getId())
+                                        .setLocation(booking.getLocation())
+                                        .setDate(booking.getDate().toString())
+                                        .setScreen(booking.getScreen())
+                                        .setBookingName(booking.getBookingName())
+                                        .setBookingEmail(booking.getBookingEmail())
+                                        .setMovie(booking.getMovie())
+                                        .setStatus("PASSED").build();
+                                responseObserver.onNext(bookingDetails);
+                            }
+                        });
+            } else {
+                logger.info("No bookings present!");
+            }
+        }
+        responseObserver.onCompleted();
     }
 
     @Override
     public void getAllBookingsByName(BookingQuery request, StreamObserver<BookingDetails> responseObserver) {
-        super.getAllBookingsByName(request, responseObserver);
+        if(request != null && request.getBookingName() != null) {
+            logger.info("Fetching bookings for booking name: " + request.getBookingName());
+            if(bookings != null && bookings.size() > 0) {
+                bookings.stream().map(booking -> (MovieBooking) booking).
+                        forEach(booking -> {
+                            if(request.getBookingName().equalsIgnoreCase(booking.getBookingName())) {
+                                BookingDetails bookingDetails = BookingDetails.newBuilder().setId(booking.getId())
+                                        .setLocation(booking.getLocation())
+                                        .setDate(booking.getDate().toString())
+                                        .setScreen(booking.getScreen())
+                                        .setBookingName(booking.getBookingName())
+                                        .setBookingEmail(booking.getBookingEmail())
+                                        .setMovie(booking.getMovie())
+                                        .setStatus("PASSED").build();
+                                responseObserver.onNext(bookingDetails);
+                            }
+                        });
+            } else {
+                logger.info("No bookings present!");
+            }
+        }
+        responseObserver.onCompleted();
     }
 
     @Override
     public void getAllBookingsByMovie(BookingQuery request, StreamObserver<BookingDetails> responseObserver) {
-        super.getAllBookingsByMovie(request, responseObserver);
+        if(request != null && request.getMovie() != null) {
+            logger.info("Fetching bookings for movie: " + request.getMovie());
+            if(bookings != null && bookings.size() > 0) {
+                bookings.stream().map(booking -> (MovieBooking) booking).
+                        forEach(booking -> {
+                            if(request.getMovie().equalsIgnoreCase(booking.getMovie())) {
+                                BookingDetails bookingDetails = BookingDetails.newBuilder().setId(booking.getId())
+                                        .setLocation(booking.getLocation())
+                                        .setDate(booking.getDate().toString())
+                                        .setScreen(booking.getScreen())
+                                        .setBookingName(booking.getBookingName())
+                                        .setBookingEmail(booking.getBookingEmail())
+                                        .setMovie(booking.getMovie())
+                                        .setStatus("PASSED").build();
+                                responseObserver.onNext(bookingDetails);
+                            }
+                        });
+            } else {
+                logger.info("No bookings present!");
+            }
+        }
+        responseObserver.onCompleted();
     }
 }
