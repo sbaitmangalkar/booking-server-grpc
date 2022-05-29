@@ -30,7 +30,9 @@ public class BookingService extends MovieBookingServiceGrpc.MovieBookingServiceI
         BookingDetails.Builder builder = BookingDetails.newBuilder();
         if (bookings != null && bookings.size() > 0 && request.getId() != null) {
             logger.info("Fetching booking details for id: " + request.getId());
-            Optional<Booking> bookingOptional = bookings.stream().filter(booking -> request.getId().equalsIgnoreCase(booking.getId())).findFirst();
+            Optional<Booking> bookingOptional = bookings.stream()
+                    .filter(booking -> request.getId().equalsIgnoreCase(booking.getId()))
+                    .findFirst();
             if (bookingOptional.isPresent()) {
                 var booking = bookingOptional.get();
                 if(booking instanceof MovieBooking) {

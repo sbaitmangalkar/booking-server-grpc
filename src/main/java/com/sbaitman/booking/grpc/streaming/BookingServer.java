@@ -39,8 +39,8 @@ public class BookingServer {
     }
 
     public static void main(String[] args) throws Exception {
-        logger.info("Starting booking server at port 8980");
-        BookingServer bookingServer = new BookingServer(8980);
+        logger.info("Starting booking server at port 9090");
+        BookingServer bookingServer = new BookingServer(9090);
         bookingServer.start();
         logger.info( "Booking server started");
         if (bookingServer.server != null) {
