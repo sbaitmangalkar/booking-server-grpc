@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package booking;
 
-option go_package = "github.com/sbaitmangalkar/booking-client-grpc-api/v1/proto";
+option go_package = "github.com/sbaitmangalkar/booking-client-grpc/v1/proto";
 option java_multiple_files = true;
 option java_package = "com.sbaitman.booking.grpc.streaming";
 option java_outer_classname = "MovieBookingProto";
